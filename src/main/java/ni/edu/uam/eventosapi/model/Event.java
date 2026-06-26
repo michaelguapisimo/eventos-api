@@ -2,27 +2,37 @@ package ni.edu.uam.eventosapi.model;
 
 import jakarta.persistence.*;
 
+// Mapeo esta clase como una entidad de JPA para que se transforme en una tabla real
 @Entity
-@Table(name = "events")
+@Table(name = "events") // Le indico a Hibernate que la tabla en Supabase se llamará "events"
 public class Event {
 
+    // Identificador único de mi evento
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Dejo que la base de datos maneje el autoincremento serial
     private Integer id;
 
-    private String title;
-    private String description;
-    private String date;
-    private String location;
-    private Integer maxCapacity;
-    private Integer attendees;
-    private Double latitude;
-    private Double longitude;
-    private Boolean open;
-    private Boolean featured;
+    // Atributos principales del evento que llena el creador o administrador
+    private String title;       // Título del evento
+    private String description; // De qué trata el evento
+    private String date;        // Fecha (manejada como string para facilitar el formato rápido)
+    private String location;    // Nombre del lugar físico (ej: "Auditorio UAM")
+    private Integer maxCapacity; // Límite de personas que caben en el evento
 
+    // Control operativo interno del evento
+    private Integer attendees;  // Contador de personas que ya le dieron "join"
+    private Double latitude;    // Coordenadas para mostrar la ubicación en el mapa del frontend
+    private Double longitude;
+    private Boolean open;       // Bandera para saber si el evento sigue activo o ya cerró inscripciones
+    private Boolean featured;   // Para destacar eventos especiales en la vista principal de la app
+
+    // Constructor vacío obligatorio requerido por JPA/Hibernate para poder instanciar la entidad
     public Event() {
     }
+
+    // ============================================================
+    // GETTERS Y SETTERS
+    // ============================================================
 
     public Integer getId() {
         return id;
@@ -112,4 +122,3 @@ public class Event {
         this.featured = featured;
     }
 }
-
